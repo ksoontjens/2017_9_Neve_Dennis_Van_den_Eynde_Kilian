@@ -1,6 +1,10 @@
 package hellotvxlet;
 
+import java.awt.MediaTracker;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Timer;
 import javax.tv.xlet.*;
 import org.dvb.event.EventManager;
@@ -11,51 +15,70 @@ import org.havi.ui.HSceneFactory;
 import org.havi.ui.HStaticText;
 import org.havi.ui.event.HActionListener;
 
-
 public class HelloTVXlet implements Xlet, HActionListener {
 
     HScene scene;
-     Playfield bord;
+    Playfield bord;
+    Random r = new Random();
+    Enemy enemy1;
+    private int asteroidsAmount = 20;
+    ArrayList asteroids = new ArrayList();
+    ArrayList asteroidPoints = new ArrayList();
+
     public HelloTVXlet() {
+    }
+
+    public void initXlet(XletContext context) 
+    { //720 x 576
+
+        scene = HSceneFactory.getInstance().getDefaultHScene();
+        bord = new Playfield();
+        UserEventRepository repo = new UserEventRepository("repo");
+        repo.addAllArrowKeys();
+        EventManager man = EventManager.getInstance();
+        man.addUserEventListener(bord, repo);
+
+        scene.add(bord);
+
+        for (int i = 0; i < asteroidsAmount; i++) 
+        {
+            asteroidPoints.add(new DoublePoint(r.nextInt(720), r.nextInt(576)));
+        }
+
+        for (int i = 0; i < asteroidsAmount; i++) 
+        {
+            DoublePoint spawnPoint = (DoublePoint)asteroidPoints.get(i);
+            asteroids.add(new Enemy("Asteroid classic 1.png", (int)spawnPoint.x, (int)spawnPoint.y));
+            scene.add((Enemy) asteroids.get(i));
+            scene.popToFront((Enemy) asteroids.get(i));
+        }
+
+        scene.validate();
+        scene.setVisible(true);
+
+        scene.repaint();
+    }
+
+    public void callback() {
+        bord.run();
+        
+        //move each enemy to the player
         
     }
 
-    public void initXlet(XletContext context) { //720 x 576
-      scene=HSceneFactory.getInstance().getDefaultHScene();
-     bord=new Playfield();
-         UserEventRepository repo=new UserEventRepository("repo");
-         repo.addAllArrowKeys();
-     EventManager man=EventManager.getInstance();
-     man.addUserEventListener(bord, repo);
-   
-      scene.add(bord);
-      scene.validate();
-      scene.setVisible(true);
-
-      scene.repaint();
-    }
-
-    public void callback()
-    {
-        bord.run();
-    }
     public void startXlet() {
-           MijnTimerTask mtt=new MijnTimerTask();
-           mtt.setCB(this);
-           Timer t=new Timer();
-           t.scheduleAtFixedRate(mtt, 0, 500);
+        MijnTimerTask mtt = new MijnTimerTask();
+        mtt.setCB(this);
+        Timer t = new Timer();
+        t.scheduleAtFixedRate(mtt, 0, 500);
     }
 
     public void pauseXlet() {
-     
     }
 
     public void destroyXlet(boolean unconditional) {
-     
     }
 
     public void actionPerformed(ActionEvent arg0) {
-       
-        }
-        
     }
+}
