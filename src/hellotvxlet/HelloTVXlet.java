@@ -44,8 +44,11 @@ public class HelloTVXlet implements Xlet, HActionListener {
         repo.addAllArrowKeys();
         EventManager man = EventManager.getInstance();
         man.addUserEventListener(bord, repo);
+        
+        Background bg = new Background();
 
         scene.add(bord);
+        scene.add(bg);
         
         for (int i = 0; i < asteroidsAmount; i++) 
         {
@@ -64,7 +67,7 @@ public class HelloTVXlet implements Xlet, HActionListener {
             scene.add((Enemy) asteroids.get(i));
             scene.popToFront((Enemy) asteroids.get(i));
         }
-
+        //bord.asteroids = asteroids;
         scene.validate();
         scene.setVisible(true);
 

@@ -26,16 +26,16 @@ import org.havi.ui.HComponent;
 public class Playfield extends HComponent implements UserEventListener {
 
     ArrayList slang=new ArrayList();
-    private double playerSpeed = 2.5;
+    private double playerSpeed = 4.5;
+    private double rotationSpeed = 15;
     private int playerX = 360;
     private int playerY = 268;
     double hx=32;
     double hy=0;
     double hoek=0;
     double gr=25;
-    ArrayList asteroids =new ArrayList();
-    ArrayList asteroidpoints=new ArrayList();
-    ArrayList asteroidhoek=new ArrayList();
+    public ArrayList asteroids;
+
     Random r=new Random();
     
     private boolean isMovingForwards = true;
@@ -70,27 +70,39 @@ public class Playfield extends HComponent implements UserEventListener {
     
                 
         g.drawPolygon(x, y, 3);
+        
+        
     }
     
     public void run()
     {
+        System.out.println(playerX + "," + playerY);
+        if(playerX > 720)
+        {
+            playerX -= 720;
+        }
+        
+        if(playerY > 576)
+        {
+            playerY -= 576;
+        }
         this.repaint();
     }
     public void userEventReceived(UserEvent e) {
       if (e.getType()==HRcEvent.KEY_PRESSED)
       {
           if(e.getCode() == HRcEvent.VK_UP)
-          {
+          {/*
               if(!isMovingForwards)
               {
                   hoek += 180;
-              }
+              }*/
               double radHoek = (hoek / 360.0) * 2 * Math.PI;
               playerX += playerSpeed * (Math.cos(radHoek));
               playerY += playerSpeed * (Math.sin(radHoek));
               isMovingForwards = true;
           }
-          
+          /*
           if(e.getCode() == HRcEvent.VK_DOWN)
           {
               if(isMovingForwards)
@@ -101,17 +113,17 @@ public class Playfield extends HComponent implements UserEventListener {
               playerX -= playerSpeed * (Math.cos(radHoek));
               playerY -= playerSpeed * (Math.sin(radHoek));
               isMovingForwards = false;
-          }
+          }*/
           
           if (e.getCode()==HRcEvent.VK_LEFT)
           {
-              hoek--;
+              hoek -= rotationSpeed;
               this.repaint();
           }
 
           if (e.getCode()==HRcEvent.VK_RIGHT)
           {
-              hoek++;
+              hoek += rotationSpeed;
               this.repaint();
           }
       }
