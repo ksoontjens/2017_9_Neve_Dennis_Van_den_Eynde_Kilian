@@ -1,7 +1,7 @@
 Signature-Version: 1.0
 Created-By: 1.6.0_16 (Sun Microsystems Inc.)
 BDJ-Signature-Version: 1.0
-SHA1-Digest-Manifest: +OQoqsvsSfFywL4IL2SKjUohWXQ=
+SHA1-Digest-Manifest: 1woGD2+WDb8HQxqU8X77zEIBB4U=
 
 Name: hellotvxlet/SlangSegment.class
 SHA1-Digest: Vh08CplYpQutMjtNz1oLHEwDfkY=
@@ -16,13 +16,13 @@ Name: hellotvxlet/ChessBoard.class
 SHA1-Digest: hKns70l2LGu46Zv0wwI0Mx+G2GE=
 
 Name: hellotvxlet/Playfield.class
-SHA1-Digest: 7A4WqNeeKqPyazUKEq2CkSZMiKE=
+SHA1-Digest: Z55iByD0nkePsB4Ee2Agi1N69Z4=
 
 Name: hellotvxlet/Background.class
 SHA1-Digest: 8NceG0r6lZIv0pbsNVj4MyMa96I=
 
 Name: hellotvxlet/Enemy.class
-SHA1-Digest: gGCJAJt7B1LUv/qtDWyK5iVFhaY=
+SHA1-Digest: WeT+55vxxBEYYnLwRneWUK/pcMM=
 
 Name: Asteroid classic 5.png
 SHA1-Digest: GVJFIOWAz2fycNH9PdQ0gz/ubqI=

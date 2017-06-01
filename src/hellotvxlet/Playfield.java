@@ -47,13 +47,13 @@ public class Playfield extends HComponent implements UserEventListener {
    
     public void paint(Graphics g)
     {
-        if(playerX >= 715)
+        if(playerX >= 710)
         {
-            playerX -= 715;
+            playerX -= 710;
         }
         if(playerX <= 5)
         {
-            playerX += 705;
+            playerX += 710;
         }
         
         if(playerY >= 565)
@@ -64,6 +64,7 @@ public class Playfield extends HComponent implements UserEventListener {
         {
             playerY += 565;
         }
+        
         System.out.println(playerX + "," + playerY);
         this.setBounds(playerX,playerY,64,64);
         g.setColor(Color.BLACK);
@@ -88,8 +89,6 @@ public class Playfield extends HComponent implements UserEventListener {
     
                 
         g.drawPolygon(x, y, 3);
-        
-        
     }
     
     public void run()

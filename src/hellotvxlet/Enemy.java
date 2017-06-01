@@ -72,6 +72,23 @@ public class Enemy extends HComponent
     
     public void Update()
     {
+        if(X >= 710)
+        {
+            X -= 710;
+        }
+        if(X <= 5)
+        {
+            X += 710;
+        }
+        
+        if(Y >= 565)
+        {
+            Y -= 565;
+        }
+        if(Y <= 5)
+        {
+            Y += 565;
+        }
         double radhoek=(Richting.x/360.0)*2*Math.PI;
         X +=(Richting.y*Math.cos(radhoek));
         Y +=(Richting.y*Math.sin(radhoek));
