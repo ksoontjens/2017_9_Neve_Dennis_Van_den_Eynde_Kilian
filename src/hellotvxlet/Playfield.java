@@ -26,8 +26,11 @@ import org.havi.ui.HComponent;
 public class Playfield extends HComponent implements UserEventListener {
 
     ArrayList slang=new ArrayList();
-    double hx=300;
-    double hy=250;
+    private double playerSpeed = 2.5;
+    private int playerX = 360;
+    private int playerY = 268;
+    double hx=32;
+    double hy=0;
     double hoek=0;
     double gr=25;
     ArrayList asteroids =new ArrayList();
@@ -37,36 +40,35 @@ public class Playfield extends HComponent implements UserEventListener {
     
     public Playfield()
     {
-        this.setBounds(0,0,720,576); // full screen
+        this.setBounds(playerX,playerY,64,64);
     }
-    
    
     public void paint(Graphics g)
     {
+        this.setBounds(playerX,playerY,64,64);
         g.setColor(Color.BLACK);
-        g.fillRect(0,0,720,576);
+        g.fillRect(0,0,64,64);
      
         g.setColor(Color.WHITE);
-                double radhoek=(hoek/360.0)*2*Math.PI;
-                double hoek2=hoek+200;
-                double radhoek2=(hoek2/360.0)*2*Math.PI;
-                double hoek3=hoek-200;
-                double radhoek3=(hoek3/360.0)*2*Math.PI;
+        double radhoek=(hoek/360.0)*2*Math.PI;
+        double hoek2=hoek+200;
+        double radhoek2=(hoek2/360.0)*2*Math.PI;
+        double hoek3=hoek-200;
+        double radhoek3=(hoek3/360.0)*2*Math.PI;
                 
-                int x[]=new int[3];
-                int y[]=new int[3];
-                 x[0]=(int)(hx+gr*Math.cos(radhoek));
-                 x[1]=(int)(hx+gr*Math.cos(radhoek2));
-                 x[2]=(int)(hx+gr*Math.cos(radhoek3));
+        int x[]=new int[3];
+        int y[]=new int[3];
+        x[0]=(int)(hx+gr*Math.cos(radhoek));
+        x[1]=(int)(hx+gr*Math.cos(radhoek2));
+        x[2]=(int)(hx+gr*Math.cos(radhoek3));
                 
-                 y[0]=(int)(hx+gr*Math.sin(radhoek));
-                 y[1]=(int)(hx+gr*Math.sin(radhoek2));
-                 y[2]=(int)(hx+gr*Math.sin(radhoek3));
+        y[0]=(int)(hx+gr*Math.sin(radhoek));
+        y[1]=(int)(hx+gr*Math.sin(radhoek2));
+        y[2]=(int)(hx+gr*Math.sin(radhoek3));
     
                 
-            g.drawPolygon(x, y, 3);
+        g.drawPolygon(x, y, 3);
     }
-
     
     public void run()
     {
@@ -75,6 +77,13 @@ public class Playfield extends HComponent implements UserEventListener {
     public void userEventReceived(UserEvent e) {
       if (e.getType()==HRcEvent.KEY_PRESSED)
       {
+          if(e.getCode() == HRcEvent.VK_UP)
+          {
+              double radHoek = (hoek / 360.0) * 2 * Math.PI;
+              playerX += playerSpeed * (Math.cos(radHoek));
+              playerY += playerSpeed * (Math.sin(radHoek));
+          }
+          
           if (e.getCode()==HRcEvent.VK_LEFT)
           {
               hoek--;
