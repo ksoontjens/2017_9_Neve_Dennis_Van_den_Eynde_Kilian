@@ -51,7 +51,7 @@ public class HelloTVXlet implements Xlet, HActionListener {
         {
             asteroidPoints.add(new DoublePoint(r.nextInt(720), r.nextInt(576)));
             asteroidSizes.add(new DoublePoint(minWidth + r.nextInt(32),minHeight + r.nextInt(32)));
-            asteroidRichtingen.add(new DoublePoint(r.nextInt(360),r.nextInt(3)+1));
+            asteroidRichtingen.add(new DoublePoint(r.nextInt(360),r.nextInt(1)+1));
         }
 
         for (int i = 0; i < asteroidsAmount; i++) 
@@ -86,7 +86,7 @@ public class HelloTVXlet implements Xlet, HActionListener {
         MijnTimerTask mtt = new MijnTimerTask();
         mtt.setCB(this);
         Timer t = new Timer();
-        t.scheduleAtFixedRate(mtt, 0, 75);
+        t.scheduleAtFixedRate(mtt, 0, 10);
     }
 
     public void pauseXlet() {

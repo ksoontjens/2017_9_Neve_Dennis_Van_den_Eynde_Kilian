@@ -38,6 +38,8 @@ public class Playfield extends HComponent implements UserEventListener {
     ArrayList asteroidhoek=new ArrayList();
     Random r=new Random();
     
+    private boolean isMovingForwards = true;
+    
     public Playfield()
     {
         this.setBounds(playerX,playerY,64,64);
@@ -79,9 +81,26 @@ public class Playfield extends HComponent implements UserEventListener {
       {
           if(e.getCode() == HRcEvent.VK_UP)
           {
+              if(!isMovingForwards)
+              {
+                  hoek += 180;
+              }
               double radHoek = (hoek / 360.0) * 2 * Math.PI;
               playerX += playerSpeed * (Math.cos(radHoek));
               playerY += playerSpeed * (Math.sin(radHoek));
+              isMovingForwards = true;
+          }
+          
+          if(e.getCode() == HRcEvent.VK_DOWN)
+          {
+              if(isMovingForwards)
+              {
+                  hoek -= 180;
+              }
+              double radHoek = (hoek / 360.0) * 2 * Math.PI;
+              playerX -= playerSpeed * (Math.cos(radHoek));
+              playerY -= playerSpeed * (Math.sin(radHoek));
+              isMovingForwards = false;
           }
           
           if (e.getCode()==HRcEvent.VK_LEFT)
