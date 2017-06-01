@@ -33,38 +33,11 @@ public class Playfield extends HComponent implements UserEventListener {
     ArrayList asteroids =new ArrayList();
     ArrayList asteroidpoints=new ArrayList();
     ArrayList asteroidhoek=new ArrayList();
-    private Image image;
     Random r=new Random();
-    private MediaTracker mtrack;
-    
     
     public Playfield()
     {
-        this.setBounds(0,0,720,576); // full scree 
-        /*
-        for (int i=0;i<10;i++)
-        {
-            
-        
-               
-                image = this.getToolkit().getImage("Asteroid classic 1.png");
-        mtrack = new MediaTracker(this);
-        mtrack.addImage(image,0);
-        
-        try
-        {
-            mtrack.waitForAll();
-        }
-        catch(Exception e)
-        {
-            System.out.println(e.toString());
-        }
-        asteroids.add(image);
-        
-        asteroidpoints.add(new DoublePoint(r.nextInt(720),r.nextInt(576)));
-        asteroidhoek.add(new DoublePoint(r.nextInt(360),r.nextInt(3)+1));
-        }*/
-        
+        this.setBounds(0,0,720,576); // full screen
     }
     
    
@@ -92,46 +65,28 @@ public class Playfield extends HComponent implements UserEventListener {
     
                 
             g.drawPolygon(x, y, 3);
-            
-            /*
-          for (int i=0;i<asteroids.size();i++)
-          {
-              DoublePoint p=(DoublePoint)asteroidpoints.get(i);
-              g.drawImage((Image)asteroids.get(i), (int)p.x, (int)p.y, null);
-          }*/
-        
     }
 
     
     public void run()
     {
-        /*
-          for (int i=0;i<asteroids.size();i++)
-          {
-              DoublePoint rich=(DoublePoint)asteroidhoek.get(i); // x= hoek y=snelheid
-              DoublePoint p=(DoublePoint)asteroidpoints.get(i);
-               double radhoek=(rich.x/360.0)*2*Math.PI;
-                       p.x+=(rich.y*Math.cos(radhoek));
-                    p.y+=(rich.y*Math.sin(radhoek));
-                      
-          }*/
         this.repaint();
     }
     public void userEventReceived(UserEvent e) {
-  if (e.getType()==HRcEvent.KEY_PRESSED)
-  {
-      if (e.getCode()==HRcEvent.VK_LEFT)
+      if (e.getType()==HRcEvent.KEY_PRESSED)
       {
-          hoek--;
-          this.repaint();
+          if (e.getCode()==HRcEvent.VK_LEFT)
+          {
+              hoek--;
+              this.repaint();
+          }
+
+          if (e.getCode()==HRcEvent.VK_RIGHT)
+          {
+              hoek++;
+              this.repaint();
+          }
       }
-      
-      if (e.getCode()==HRcEvent.VK_RIGHT)
-      {
-          hoek++;
-          this.repaint();
-      }
-  }
-}
+    }
 }
 

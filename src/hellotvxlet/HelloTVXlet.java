@@ -21,9 +21,16 @@ public class HelloTVXlet implements Xlet, HActionListener {
     Playfield bord;
     Random r = new Random();
     Enemy enemy1;
+    private int minWidth = 32;
+    private int minHeight = 32;
+    
     private int asteroidsAmount = 20;
     ArrayList asteroids = new ArrayList();
     ArrayList asteroidPoints = new ArrayList();
+    ArrayList asteroidSizes = new ArrayList();
+    ArrayList asteroidRichtingen = new ArrayList();
+    
+    
 
     public HelloTVXlet() {
     }
@@ -39,16 +46,21 @@ public class HelloTVXlet implements Xlet, HActionListener {
         man.addUserEventListener(bord, repo);
 
         scene.add(bord);
-
+        
         for (int i = 0; i < asteroidsAmount; i++) 
         {
             asteroidPoints.add(new DoublePoint(r.nextInt(720), r.nextInt(576)));
+            asteroidSizes.add(new DoublePoint(minWidth + r.nextInt(32),minHeight + r.nextInt(32)));
+            asteroidRichtingen.add(new DoublePoint(r.nextInt(360),r.nextInt(3)+1));
         }
 
         for (int i = 0; i < asteroidsAmount; i++) 
         {
             DoublePoint spawnPoint = (DoublePoint)asteroidPoints.get(i);
-            asteroids.add(new Enemy("Asteroid classic 1.png", (int)spawnPoint.x, (int)spawnPoint.y));
+            DoublePoint size = (DoublePoint)asteroidSizes.get(i);
+            DoublePoint richting = (DoublePoint)asteroidRichtingen.get(i);
+            
+            asteroids.add(new Enemy(r,(int)spawnPoint.x, (int)spawnPoint.y,(int)size.x,(int)size.y,richting));
             scene.add((Enemy) asteroids.get(i));
             scene.popToFront((Enemy) asteroids.get(i));
         }
@@ -63,14 +75,18 @@ public class HelloTVXlet implements Xlet, HActionListener {
         bord.run();
         
         //move each enemy to the player
-        
+        for(int i = 0; i < asteroids.size(); i++)
+        {
+            Enemy asteroid = (Enemy)asteroids.get(i);
+            asteroid.Update();
+        }
     }
 
     public void startXlet() {
         MijnTimerTask mtt = new MijnTimerTask();
         mtt.setCB(this);
         Timer t = new Timer();
-        t.scheduleAtFixedRate(mtt, 0, 500);
+        t.scheduleAtFixedRate(mtt, 0, 75);
     }
 
     public void pauseXlet() {
