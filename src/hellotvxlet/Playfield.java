@@ -25,6 +25,7 @@ import org.havi.ui.HComponent;
  */
 public class Playfield extends HComponent implements UserEventListener {
 
+    Laser laser;
     ArrayList slang=new ArrayList();
     private double playerSpeed = 4.5;
     private double rotationSpeed = 15;
@@ -40,8 +41,9 @@ public class Playfield extends HComponent implements UserEventListener {
     
     private boolean isMovingForwards = true;
     
-    public Playfield()
+    public Playfield(Laser pLaser)
     {
+        laser = pLaser;
         this.setBounds(playerX,playerY,64,64);
     }
    
@@ -65,7 +67,7 @@ public class Playfield extends HComponent implements UserEventListener {
             playerY += 565;
         }
         
-        System.out.println(playerX + "," + playerY);
+        //System.out.println(playerX + "," + playerY);
         this.setBounds(playerX,playerY,64,64);
         g.setColor(Color.BLACK);
         g.fillRect(0,0,64,64);
@@ -94,10 +96,16 @@ public class Playfield extends HComponent implements UserEventListener {
     public void run()
     {
         this.repaint();
+        laser.FeedPlayerPosition(playerX, playerY, hoek);
     }
     public void userEventReceived(UserEvent e) {
       if (e.getType()==HRcEvent.KEY_PRESSED)
       {
+          if(e.getCode() == HRcEvent.VK_NUMPAD0)
+          {
+              laser.mayDraw = true;
+          }
+          
           if(e.getCode() == HRcEvent.VK_UP)
           {/*
               if(!isMovingForwards)

@@ -1,5 +1,6 @@
 package hellotvxlet;
 
+import java.awt.Color;
 import java.awt.MediaTracker;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -12,7 +13,9 @@ import org.dvb.event.UserEventRepository;
 import org.havi.ui.HContainer;
 import org.havi.ui.HScene;
 import org.havi.ui.HSceneFactory;
+import org.havi.ui.HState;
 import org.havi.ui.HStaticText;
+import org.havi.ui.HVisible;
 import org.havi.ui.event.HActionListener;
 
 public class HelloTVXlet implements Xlet, HActionListener {
@@ -24,12 +27,15 @@ public class HelloTVXlet implements Xlet, HActionListener {
     private int minWidth = 32;
     private int minHeight = 32;
     
-    private int asteroidsAmount = 20;
+    private int asteroidsAmount = 10;
+    private int score = 0;
     ArrayList asteroids = new ArrayList();
     ArrayList asteroidPoints = new ArrayList();
     ArrayList asteroidSizes = new ArrayList();
     ArrayList asteroidRichtingen = new ArrayList();
+    HStaticText lblScore;
     
+    private boolean gameOver = false;
     
 
     public HelloTVXlet() {
@@ -39,16 +45,23 @@ public class HelloTVXlet implements Xlet, HActionListener {
     { //720 x 576
 
         scene = HSceneFactory.getInstance().getDefaultHScene();
-        bord = new Playfield();
+        Laser laser = new Laser();
+        bord = new Playfield(laser);
         UserEventRepository repo = new UserEventRepository("repo");
         repo.addAllArrowKeys();
         EventManager man = EventManager.getInstance();
         man.addUserEventListener(bord, repo);
         
         Background bg = new Background();
-
+        lblScore = new HStaticText("Score: " + score,10,10,200,25);
+        lblScore.setForeground(Color.WHITE);
+        
         scene.add(bord);
         scene.add(bg);
+        scene.add(lblScore);
+        scene.popToFront(lblScore);
+        scene.add(laser);
+        scene.popToFront(laser);
         
         for (int i = 0; i < asteroidsAmount; i++) 
         {
@@ -67,7 +80,8 @@ public class HelloTVXlet implements Xlet, HActionListener {
             scene.add((Enemy) asteroids.get(i));
             scene.popToFront((Enemy) asteroids.get(i));
         }
-        //bord.asteroids = asteroids;
+        //bord.asteroids = asteroid
+   
         scene.validate();
         scene.setVisible(true);
 
@@ -76,13 +90,20 @@ public class HelloTVXlet implements Xlet, HActionListener {
 
     public void callback() {
         bord.run();
-        
-        //move each enemy to the player
-        for(int i = 0; i < asteroids.size(); i++)
+        score++;
+        lblScore.setTextContent("Score: " + score, HState.NORMAL_STATE);
+       
+        if(!gameOver)
         {
-            Enemy asteroid = (Enemy)asteroids.get(i);
-            asteroid.Update();
+            //move each enemy to the player
+            for(int i = 0; i < asteroids.size(); i++)
+            {
+                Enemy asteroid = (Enemy)asteroids.get(i);
+                asteroid.Update();
+            }
         }
+        
+        scene.repaint();
     }
 
     public void startXlet() {
