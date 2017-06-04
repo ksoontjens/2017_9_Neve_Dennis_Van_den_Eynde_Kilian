@@ -70,6 +70,8 @@ public class Playfield extends HComponent implements UserEventListener {
             playerY += 565;
         }
         
+        laser.asteroids = asteroids;
+        
         for(int i = 0; i < asteroids.size(); i++)
         {
             Enemy e = (Enemy)asteroids.get(i);

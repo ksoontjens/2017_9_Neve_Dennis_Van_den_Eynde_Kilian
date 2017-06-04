@@ -105,7 +105,7 @@ public class HelloTVXlet implements Xlet, HActionListener {
 
     public void callback() {
         bord.run();
-        score++;
+        score = bord.laser.kills * 10;
         lblScore.setTextContent("Score: " + score, HState.NORMAL_STATE);
        
         if(!gameOver)

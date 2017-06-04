@@ -17,6 +17,8 @@ public class Laser extends HComponent
 {
     public boolean mayDraw = false;
     int X, Y, X2, Y2;
+    public int kills = 0;
+    public ArrayList asteroids;
     
     public Laser()
     {
@@ -42,6 +44,17 @@ public class Laser extends HComponent
         System.out.println("line draw");
         g.setColor(Color.WHITE);
         g.drawLine(X, Y, X2, Y2); // --> TEKENT NIETS
+        
+        for(int i = 0; i < asteroids.size(); i++)
+        {
+            Enemy e = (Enemy)asteroids.get(i);
+            if(this.getBounds().intersects(e.getBounds()))
+            {
+                //we have a collision
+                asteroids.remove(i);
+                kills++;
+            }
+        }
     }
 }
 
