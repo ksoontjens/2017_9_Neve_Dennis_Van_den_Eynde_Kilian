@@ -25,6 +25,7 @@ import org.havi.ui.HComponent;
  */
 public class Playfield extends HComponent implements UserEventListener {
 
+    HelloTVXlet master;
     Laser laser;
     ArrayList slang=new ArrayList();
     private double playerSpeed = 4.5;
@@ -42,8 +43,9 @@ public class Playfield extends HComponent implements UserEventListener {
     
     private boolean isMovingForwards = true;
     
-    public Playfield(Laser pLaser)
+    public Playfield(Laser pLaser, HelloTVXlet pMaster)
     {
+        master = pMaster;
         laser = pLaser;
         this.setBounds(playerX,playerY,64,64);
     }
@@ -76,6 +78,7 @@ public class Playfield extends HComponent implements UserEventListener {
                 //we have a collision
                 //show the gameoverscreen
                 gos.mayDraw = true;
+                master.ResetAsteroids();
             }
         }
         

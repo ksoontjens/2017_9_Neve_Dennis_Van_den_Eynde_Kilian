@@ -29,10 +29,10 @@ public class HelloTVXlet implements Xlet, HActionListener {
     
     private int asteroidsAmount = 10;
     private int score = 0;
-    ArrayList asteroids = new ArrayList();
-    ArrayList asteroidPoints = new ArrayList();
-    ArrayList asteroidSizes = new ArrayList();
-    ArrayList asteroidRichtingen = new ArrayList();
+    public ArrayList asteroids = new ArrayList();
+    public ArrayList asteroidPoints = new ArrayList();
+    public ArrayList asteroidSizes = new ArrayList();
+    public ArrayList asteroidRichtingen = new ArrayList();
     HStaticText lblScore;
     
     private boolean gameOver = false;
@@ -40,13 +40,21 @@ public class HelloTVXlet implements Xlet, HActionListener {
 
     public HelloTVXlet() {
     }
-
+    
+    public void ResetAsteroids()
+    {
+        asteroids = new ArrayList();
+        asteroidPoints = new ArrayList();
+        asteroidSizes = new ArrayList();
+        asteroidRichtingen = new ArrayList();
+    }
+    
     public void initXlet(XletContext context) 
     { //720 x 576
 
         scene = HSceneFactory.getInstance().getDefaultHScene();
         Laser laser = new Laser();
-        bord = new Playfield(laser);
+        bord = new Playfield(laser,this);
         UserEventRepository repo = new UserEventRepository("repo");
         repo.addAllArrowKeys();
         EventManager man = EventManager.getInstance();
@@ -64,8 +72,7 @@ public class HelloTVXlet implements Xlet, HActionListener {
         scene.popToFront(lblScore);
         scene.add(laser);
         scene.popToFront(laser);
-        scene.add(gos);
-        scene.popToFront(gos);
+        
         bord.gos = gos;
         
         for (int i = 0; i < asteroidsAmount; i++) 
@@ -86,6 +93,9 @@ public class HelloTVXlet implements Xlet, HActionListener {
             scene.popToFront((Enemy) asteroids.get(i));
         }
         bord.asteroids = asteroids;
+        
+        scene.add(gos);
+        scene.popToFront(gos);
    
         scene.validate();
         scene.setVisible(true);
