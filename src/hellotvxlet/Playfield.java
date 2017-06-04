@@ -36,6 +36,7 @@ public class Playfield extends HComponent implements UserEventListener {
     double hoek=0;
     double gr=25;
     public ArrayList asteroids;
+    public GameOverScreen gos;
 
     Random r=new Random();
     
@@ -65,6 +66,17 @@ public class Playfield extends HComponent implements UserEventListener {
         if(playerY <= 5)
         {
             playerY += 565;
+        }
+        
+        for(int i = 0; i < asteroids.size(); i++)
+        {
+            Enemy e = (Enemy)asteroids.get(i);
+            if(this.getBounds().intersects(e.getBounds()))
+            {
+                //we have a collision
+                //show the gameoverscreen
+                gos.mayDraw = true;
+            }
         }
         
         //System.out.println(playerX + "," + playerY);

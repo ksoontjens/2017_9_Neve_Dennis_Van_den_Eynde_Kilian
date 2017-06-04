@@ -56,12 +56,17 @@ public class HelloTVXlet implements Xlet, HActionListener {
         lblScore = new HStaticText("Score: " + score,10,10,200,25);
         lblScore.setForeground(Color.WHITE);
         
+        GameOverScreen gos = new GameOverScreen();
+        
         scene.add(bord);
         scene.add(bg);
         scene.add(lblScore);
         scene.popToFront(lblScore);
         scene.add(laser);
         scene.popToFront(laser);
+        scene.add(gos);
+        scene.popToFront(gos);
+        bord.gos = gos;
         
         for (int i = 0; i < asteroidsAmount; i++) 
         {
@@ -80,7 +85,7 @@ public class HelloTVXlet implements Xlet, HActionListener {
             scene.add((Enemy) asteroids.get(i));
             scene.popToFront((Enemy) asteroids.get(i));
         }
-        //bord.asteroids = asteroid
+        bord.asteroids = asteroids;
    
         scene.validate();
         scene.setVisible(true);
